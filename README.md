@@ -20,3 +20,72 @@ Credit card fraud is a significant challenge in the financial industry, leading 
 | **Customer Protection**          | Implementing an effective fraud detection model helps protect customers from unauthorized transactions, thereby enhancing the overall customer experience and trust in financial services. |
 | **Risk Management**              | Beyond immediate fraud detection, the insights gained from the model can inform broader risk management strategies, helping financial institutions better understand and mitigate various types of fraud. |
 
+## Data Preprocessing
+
+Data preprocessing is a critical step in preparing the dataset for training the machine learning model. This process ensures that the data is clean, structured, and suitable for input into the Artificial Neural Network (ANN). The dataset used in this project is sourced from Kaggle and contains detailed information on credit card transactions. The primary goal is to use this data to detect fraudulent transactions by training an Artificial Neural Network (ANN). The dataset is well-structured, with each observation representing a unique transaction, and it includes various features that describe transaction details, customer demographics, and merchant information.
+
+### Dataset Overview
+
+| **Attribute**              | **Description**                                                                                  |
+|----------------------------|--------------------------------------------------------------------------------------------------|
+| **Number of Observations**  | 14,446 transactions                                                                             |
+| **Number of Features**      | 15 features                                                                                     |
+| **Source**                  | Kaggle                                                                                          |
+| **Feature Names**           | Description of each feature is provided below                                                   |
+| **`trans_date_trans_time`** | Timestamp of the transaction.                                                                   |
+| **`merchant`**              | Name of the merchant.                                                                           |
+| **`category`**              | Category of the transaction.                                                                    |
+| **`amt`**                   | Transaction amount.                                                                             |
+| **`city`**                  | City where the transaction occurred.                                                            |
+| **`state`**                 | State where the transaction occurred.                                                           |
+| **`lat`**                   | Latitude of the customer's location.                                                            |
+| **`long`**                  | Longitude of the customer's location.                                                           |
+| **`city_pop`**              | Population of the city where the transaction occurred.                                          |
+| **`job`**                   | Customer's job title.                                                                           |
+| **`dob`**                   | Customer's date of birth.                                                                       |
+| **`trans_num`**             | Unique transaction identifier.                                                                  |
+| **`merch_lat`**             | Latitude of the merchant's location.                                                            |
+| **`merch_long`**            | Longitude of the merchant's location.                                                           |
+| **`is_fraud`**              | Indicator of whether the transaction is fraudulent (1 for fraud, 0 for non-fraud).              |
+
+Below is a detailed explanation of the preprocessing steps performed in this project and the rationale behind each step.
+
+---
+
+### Preprocessing Workflow
+
+```plaintext
++-----------------------------------+            +------------------------------------------+
+|                                   |            |                                          |
+|   Loading the Dataset             |            |  Separating Features and Target          |
+|                                   |            |                                          |
++-----------------------------------+            +------------------------------------------+
+           |                                     |      
+           v                                     v
++-----------------------------------+    +------------------------------------------+
+|                                   |    |                                          |
+|   Cleaning the Target Variable    +--> |  Converting Date Columns                 |
+|                                   |    |                                          |
++-----------------------------------+    +------------------------------------------+
+           |                                     |
+           v                                     v
++-----------------------------------+    +------------------------------------------+
+|                                   |    |                                          |
+|   One-Hot Encoding                +--> |  Feature Engineering                     |
+|                                   |    |   - Extracting Date and Time Components  |
++-----------------------------------+    |   - Calculating Age                      |
+           |                             |   - Calculating Distance                 |
+           v                             +------------------------------------------+
++-----------------------------------+              |
+|                                   |              v
+|   Scaling/Normalization           +--> +------------------------------------------+
+|                                   |    |                                          |
++-----------------------------------+    |  Splitting the Data                      |
+           |                             |                                          |
+           v                             +------------------------------------------+
++-----------------------------------+     
+|                                   |     
+|    Data Ready for Modeling        |     
+|                                   |     
++-----------------------------------+     
+
