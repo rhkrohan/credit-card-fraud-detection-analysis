@@ -62,3 +62,47 @@ Below is a detailed explanation of the preprocessing steps performed in this pro
 | **Feature Engineering**             | New features are derived from existing data, such as date, time, age, and distance between customer and merchant.| To enhance the model's predictive power by providing additional context and insights.                  | - **Extracting Date/Time:** `dt.date.apply(lambda x: x.toordinal())`; <br> - **Calculating Age:** `today - dob`; <br> - **Distance:** `geodesic` |
 | **Scaling/Normalization**           | Feature scaling is applied to ensure all features have a mean of 0 and a standard deviation of 1.                | To prevent bias due to differing scales and to improve the model’s learning efficiency.               | `StandardScaler().fit_transform(X)`                                                                                                         |
 | **Splitting the Data**              | The dataset is split into training and testing sets.                                                            | To evaluate the model's performance on unseen data and prevent overfitting.                           | `train_test_split(X_scaled, y, test_size=0.2, random_state=42)`                                                                             |
+
+## Building the Artificial Neural Network (ANN)
+
+The construction of the Artificial Neural Network (ANN) is a critical component of this project, as it directly impacts the model's ability to accurately predict fraudulent transactions. In this section, we delve into the architecture of the ANN, the rationale behind the design choices, and the techniques used to optimize the model's performance.
+
+### ANN Architecture
+
+The ANN developed for this project follows a Sequential model architecture, which is one of the most straightforward and commonly used methods for building neural networks. This model is constructed by stacking layers sequentially, where the output of one layer serves as the input to the next. The ANN in this project consists of the following layers:
+
+1. **Input Layer**: 
+   - The input layer receives the processed features from the dataset. The number of neurons in this layer corresponds to the number of features, which in this case is determined by the preprocessing steps.
+
+2. **Hidden Layers**:
+   
+   | **Layer**          | **Number of Neurons** | **Activation Function** | **Rationale**                                                                                              |
+   |--------------------|-----------------------|--------------------------|-------------------------------------------------------------------------------------------------------------|
+   | **First Hidden Layer**  | 13                    | ReLU                      | The choice of 13 neurons was determined through experimentation. This number provides a balance between model complexity and performance, allowing the network to learn sufficient patterns without overfitting. |
+   | **Second Hidden Layer** | 4                     | ReLU                      | The reduction to 4 neurons funnels the learned information, helping to distill the features and prevent overfitting as the network moves closer to the output layer. This structure encourages the network to generalize better to new, unseen data. |
+
+3. **Output Layer**:
+   - The output layer has a single neuron, as the task is a binary classification problem (fraud vs. non-fraud). The Sigmoid activation function is used in this layer, which is ideal for binary classification tasks. The Sigmoid function outputs a probability value between 0 and 1, which represents the model's prediction of whether a transaction is fraudulent or not.
+
+### Activation Functions
+
+Activation functions are crucial in a neural network as they introduce non-linearity, enabling the network to learn complex patterns in the data. For this ANN:
+
+- **ReLU (Rectified Linear Unit)**: Used in the hidden layers, ReLU is the most widely used activation function in deep learning models. It is computationally efficient and helps prevent issues like the vanishing gradient problem, which can hamper the learning process in deeper networks.
+  
+- **Sigmoid**: Used in the output layer, the Sigmoid function is perfect for binary classification tasks. It converts the output into a probability score between 0 and 1, allowing for a smooth and interpretable prediction of either class (fraud or non-fraud).
+
+### Tuning the Model
+
+| **Component**            | **Details**                                                        | **Rationale**                                                                                                           |
+|--------------------------|--------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------|
+| **Number of Neurons**     | 13 in the first hidden layer, 4 in the second hidden layer         | Experimentation led to these values as they offered a good balance between complexity and generalization, preventing overfitting. |
+| **Activation Functions**  | ReLU in hidden layers, Sigmoid in output layer                     | ReLU efficiently handles non-linearity and avoids the vanishing gradient problem; Sigmoid provides smooth binary outputs, ideal for classification tasks. |
+| **Optimizer**             | Adam Optimizer                                                     | Adam combines the best features of AdaGrad and RMSProp, offering efficient and adaptive learning rates, particularly useful for large datasets. |
+| **Loss Function**         | Binary Cross-Entropy                                               | Ideal for binary classification, this function measures the divergence between predicted probabilities and actual labels, guiding the model to improve accuracy. |
+
+### Model Training and Evaluation
+
+During training, the model iteratively adjusts its weights using the Adam optimizer to minimize the binary cross-entropy loss. The use of ReLU in the hidden layers helps the model learn complex, non-linear relationships in the data, while the Sigmoid function in the output layer ensures that the predictions are probabilities, which are easy to interpret.
+
+The architecture of this ANN, with its two hidden layers, has been optimized to balance model complexity and training performance, resulting in a network that is both powerful and efficient at detecting fraudulent transactions.
