@@ -54,7 +54,6 @@ Below is a detailed explanation of the preprocessing steps performed in this pro
 
 ### Preprocessing Workflow
 
-```plaintext
 +-----------------------------------+            +------------------------------------------+
 |                                   |            |                                          |
 |   Loading the Dataset             |            |  Separating Features and Target          |
