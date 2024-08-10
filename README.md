@@ -50,36 +50,15 @@ Data preprocessing is a critical step in preparing the dataset for training the 
 
 Below is a detailed explanation of the preprocessing steps performed in this project and the rationale behind each step.
 
+## Data Preprocessing Summary
 
-1. **Loading the Dataset**  
-   The first step involves loading the dataset into a pandas DataFrame for easy manipulation and analysis. Working with the dataset in a DataFrame format allows for efficient application of data preprocessing techniques such as cleaning, transformation, and feature engineering.
-
-2. **Separating Features (X) and Target (y)**  
-   We separate the independent variables (features) from the dependent variable (target) to clearly define what the model will learn from (features) and what it will predict (target). This separation is crucial as it allows the model to learn patterns in the features that are predictive of the target variable.
-
-3. **Cleaning the Target Variable (y)**  
-   The target variable, `is_fraud`, initially contained mixed content, including numeric labels combined with timestamps. We cleaned this column by extracting only the numeric values and converting them into integers. Ensuring that the target variable contains only clean, numeric values is essential for accurate model training. The model needs to predict a binary outcome (fraud or not fraud), and any non-numeric content would hinder this process.
-
-4. **Converting Date Columns to Datetime Format**  
-   We converted the `trans_date_trans_time` and `dob` (date of birth) columns from string format to datetime objects. Converting these columns to datetime objects allows us to easily extract useful features such as the transaction date, transaction time, and customer age. These time-related features are often crucial in fraud detection, as fraudulent transactions may exhibit specific temporal patterns.
-
-5. **One-Hot Encoding of Categorical Variables**  
-   We applied one-hot encoding to convert categorical features such as `merchant`, `category`, `city`, `job`, and `state` into a numerical format suitable for model training. Machine learning models, particularly neural networks, require numerical input. One-hot encoding allows us to transform categorical variables into binary columns, where each category is represented as a separate feature with a value of 0 or 1.
-
-6. **Feature Engineering**  
-   We created new features from the existing data to enhance the model's predictive power. Feature engineering allows us to derive new insights from the data that may not be immediately apparent in the raw format. These engineered features can significantly improve the model's ability to detect fraud.
-
-   a. **Extracting Date and Time Components**  
-      We extracted the transaction date and time from the `trans_date_trans_time` column and transformed them into numerical features. Temporal features such as the date and time of a transaction can be highly predictive of fraudulent activity. By converting these into numerical values, the model can learn patterns related to when fraud is more likely to occur.
-
-   b. **Calculating Age from Date of Birth**  
-      We calculated the customer's age based on the `dob` column. Age is a demographic feature that may correlate with transaction behavior and the likelihood of fraud. By deriving age from the date of birth, we provide the model with additional context about the customer.
-
-   c. **Calculating Distance Between Customer and Merchant**  
-      We calculated the geographic distance between the customer's location and the merchant's location using their respective latitude and longitude coordinates. The distance between the customer and the merchant can be a strong indicator of fraudulent activity. Transactions occurring far from the customer's usual location might be suspicious and warrant closer scrutiny.
-
-7. **Scaling/Normalization**  
-   We applied feature scaling to ensure that all features contribute equally to the model during training. Features in the dataset can have different ranges, which can bias the model if not addressed. For example, transaction amounts might range from a few dollars to thousands, while age might only range from 18 to 80. Scaling ensures that each feature has a mean of 0 and a standard deviation of 1, allowing the model to learn more effectively.
-
-8. **Splitting the Data into Training and Testing Sets**  
-   Finally, we split the dataset into training and testing sets, with 80% of the data used for training and 20% used for testing. Splitting the data allows us to evaluate the model's performance on unseen data. The training set is used to fit the model, while the testing set provides an unbiased assessment of how well the model generalizes to new data.
+| **Step**                            | **Description**                                                                                                 | **Purpose**                                                                                          | **Method**                                                                                                                                  |
+|-------------------------------------|-----------------------------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------|
+| **Loading the Dataset**             | The dataset is loaded into a pandas DataFrame for easy manipulation and analysis.                               | To structure the data for efficient preprocessing and analysis.                                       | `pd.read_csv(file_path)`                                                                                                                    |
+| **Separating Features and Target**  | Independent variables (features) are separated from the dependent variable (target).                            | To distinguish between the data the model will learn from and the outcome it will predict.             | `X = data.drop(columns=['is_fraud']); y = data['is_fraud']`                                                                                 |
+| **Cleaning the Target Variable**    | The `is_fraud` column is cleaned by extracting numeric values and converting them to integers.                  | To ensure the target variable is in a clean, numeric format suitable for training.                    | `y_cleaned = y.str.extract(r'(\d)').astype(int)`                                                                                            |
+| **Converting Date Columns**         | Date columns (`trans_date_trans_time` and `dob`) are converted from strings to datetime objects.                | To enable extraction of time-related features, which are crucial for detecting temporal patterns.      | `pd.to_datetime()` with the appropriate date format.                                                                                        |
+| **One-Hot Encoding of Categorical** | Categorical features (`merchant`, `category`, `city`, `job`, `state`) are converted into numerical format.      | To transform categorical data into a format suitable for machine learning models, particularly ANNs.   | `pd.get_dummies()`                                                                                                                          |
+| **Feature Engineering**             | New features are derived from existing data, such as date, time, age, and distance between customer and merchant.| To enhance the model's predictive power by providing additional context and insights.                  | - **Extracting Date/Time:** `dt.date.apply(lambda x: x.toordinal())`; <br> - **Calculating Age:** `today - dob`; <br> - **Distance:** `geodesic` |
+| **Scaling/Normalization**           | Feature scaling is applied to ensure all features have a mean of 0 and a standard deviation of 1.                | To prevent bias due to differing scales and to improve the model’s learning efficiency.               | `StandardScaler().fit_transform(X)`                                                                                                         |
+| **Splitting the Data**              | The dataset is split into training and testing sets.                                                            | To evaluate the model's performance on unseen data and prevent overfitting.                           | `train_test_split(X_scaled, y, test_size=0.2, random_state=42)`                                                                             |
