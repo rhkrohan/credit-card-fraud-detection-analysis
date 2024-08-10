@@ -50,46 +50,6 @@ Data preprocessing is a critical step in preparing the dataset for training the 
 
 Below is a detailed explanation of the preprocessing steps performed in this project and the rationale behind each step.
 
----
-
-### Preprocessing Workflow
-```
-+-----------------------------------+            +------------------------------------------+
-|                                   |            |                                          |
-|   Loading the Dataset             |            |  Separating Features and Target          |
-|                                   |            |                                          |
-+-----------------------------------+            +------------------------------------------+
-           |                                     |      
-           v                                     v
-+-----------------------------------+    +------------------------------------------+
-|                                   |    |                                          |
-|   Cleaning the Target Variable    +--> |  Converting Date Columns                 |
-|                                   |    |                                          |
-+-----------------------------------+    +------------------------------------------+
-           |                                     |
-           v                                     v
-+-----------------------------------+    +------------------------------------------+
-|                                   |    |                                          |
-|   One-Hot Encoding                +--> |  Feature Engineering                     |
-|                                   |    |   - Extracting Date and Time Components  |
-+-----------------------------------+    |   - Calculating Age                      |
-           |                             |   - Calculating Distance                 |
-           v                             +------------------------------------------+
-+-----------------------------------+              |
-|                                   |              v
-|   Scaling/Normalization           +--> +------------------------------------------+
-|                                   |    |                                          |
-+-----------------------------------+    |  Splitting the Data                      |
-           |                             |                                          |
-           v                             +------------------------------------------+
-+-----------------------------------+     
-|                                   |     
-|    Data Ready for Modeling        |     
-|                                   |     
-+-----------------------------------+     
-
-
-
 
 1. **Loading the Dataset**  
    The first step involves loading the dataset into a pandas DataFrame for easy manipulation and analysis. Working with the dataset in a DataFrame format allows for efficient application of data preprocessing techniques such as cleaning, transformation, and feature engineering.
