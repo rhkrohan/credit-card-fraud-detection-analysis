@@ -53,7 +53,7 @@ Below is a detailed explanation of the preprocessing steps performed in this pro
 ---
 
 ### Preprocessing Workflow
-
+```
 +-----------------------------------+            +------------------------------------------+
 |                                   |            |                                          |
 |   Loading the Dataset             |            |  Separating Features and Target          |
@@ -86,7 +86,7 @@ Below is a detailed explanation of the preprocessing steps performed in this pro
 |                                   |     
 |    Data Ready for Modeling        |     
 |                                   |     
-+-----------------------------------+     
++-----------------------------------+     ```
 
 1. **Loading the Dataset**  
    The first step involves loading the dataset into a pandas DataFrame for easy manipulation and analysis. Working with the dataset in a DataFrame format allows for efficient application of data preprocessing techniques such as cleaning, transformation, and feature engineering.
