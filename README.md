@@ -106,3 +106,57 @@ Activation functions are crucial in a neural network as they introduce non-linea
 During training, the model iteratively adjusts its weights using the Adam optimizer to minimize the binary cross-entropy loss. The use of ReLU in the hidden layers helps the model learn complex, non-linear relationships in the data, while the Sigmoid function in the output layer ensures that the predictions are probabilities, which are easy to interpret.
 
 The architecture of this ANN, with its two hidden layers, has been optimized to balance model complexity and training performance, resulting in a network that is both powerful and efficient at detecting fraudulent transactions.
+
+## Model Performance
+
+The model's performance is crucial in understanding its strengths and limitations in detecting fraudulent transactions. The evaluation metrics provide insights into how well the model generalizes to new, unseen data and its effectiveness in identifying both fraudulent and non-fraudulent transactions. Below is a detailed analysis of the model's performance based on the results.
+
+### Overall Accuracy
+
+- **Test Accuracy**: The model achieved a test accuracy of approximately **0.93** (or 93%). This indicates that the model correctly classified 93% of the transactions in the test set as either fraudulent or non-fraudulent.
+
+### Precision, Recall, and F1-Score
+
+- **Class 0 (Non-Fraudulent Transactions)**:
+  - **Precision**: 0.94
+  - **Recall**: 0.98
+  - **F1-Score**: 0.96
+  - **Support**: 2505
+
+  The precision and recall for non-fraudulent transactions are both very high, indicating that the model is excellent at correctly identifying genuine transactions. The F1-score, which is the harmonic mean of precision and recall, is also very high at 0.96, suggesting that the model is well-balanced in terms of precision and recall for this class.
+
+- **Class 1 (Fraudulent Transactions)**:
+  - **Precision**: 0.83
+  - **Recall**: 0.59
+  - **F1-Score**: 0.69
+  - **Support**: 385
+
+  For fraudulent transactions, the precision is reasonably high at 0.83, meaning that when the model predicts a transaction as fraudulent, it is correct 83% of the time. However, the recall for fraudulent transactions is lower at 0.59, indicating that the model misses some fraudulent transactions. The F1-score of 0.69 reflects this trade-off between precision and recall.
+
+### Confusion Matrix
+
+The confusion matrix provides a detailed breakdown of the model's predictions:
+
+- **True Positives (TP)**: 228 (fraudulent transactions correctly identified)
+- **True Negatives (TN)**: 2459 (non-fraudulent transactions correctly identified)
+- **False Positives (FP)**: 46 (non-fraudulent transactions incorrectly identified as fraudulent)
+- **False Negatives (FN)**: 157 (fraudulent transactions incorrectly identified as non-fraudulent)
+
+### Strengths
+
+- **High Accuracy**: The model demonstrates high overall accuracy, especially in correctly identifying non-fraudulent transactions (Class 0). This is crucial in minimizing false alarms in a real-world setting.
+- **High Precision for Fraudulent Transactions**: With a precision of 0.83 for fraudulent transactions, the model is relatively good at minimizing false positives, which is essential in avoiding unnecessary investigations.
+
+### Limitations
+
+- **Lower Recall for Fraudulent Transactions**: The model's recall for fraudulent transactions is 0.59, which indicates that it misses about 41% of the actual fraud cases. In a real-world application, this could mean that some fraudulent transactions may go undetected, leading to potential financial losses.
+- **Class Imbalance**: The significant difference in support between the two classes (2505 for non-fraudulent vs. 385 for fraudulent) suggests that the model might be biased towards the majority class. This could be contributing to the lower recall for fraudulent transactions.
+
+### Implications
+
+- **Real-World Application**: In a real-world scenario, the high precision for fraudulent transactions is beneficial as it reduces the number of false positives, ensuring that resources are not wasted on investigating legitimate transactions. However, the lower recall could be problematic, as missing actual fraud cases can lead to financial losses.
+- **Need for Further Tuning**: To improve the model's performance, especially in detecting fraudulent transactions, further tuning and perhaps implementing techniques to address class imbalance (such as SMOTE or adjusting class weights) could be beneficial. Additionally, exploring more complex models or ensemble techniques could enhance the recall without compromising precision.
+
+## Conclusion
+
+The model shows strong potential with a high overall accuracy and precision for fraudulent transactions. However, the relatively lower recall for fraud cases indicates that the model might need further adjustments to improve its ability to detect all instances of fraud. Balancing precision and recall is key in developing an effective fraud detection model that minimizes both false positives and false negatives.
